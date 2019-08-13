@@ -5,8 +5,6 @@ const mongo = require('koa-mongo');
 router.get('/count', async (ctx, next) => {
     const recipes = await collection(ctx).find().toArray()
     ctx.body = { count: recipes.length };
-
-    next();
 });
 
 router.get('/', async (ctx, next) => {
@@ -45,6 +43,7 @@ router.get('/:id', async (ctx, next) => {
 router.put('/:id', async (ctx, next) => {
     await collection(ctx).updateOne({ _id: mongo.ObjectId(ctx.params.id) }, { $set: ctx.request.body });
     ctx.body = {message:`The recipe with id: ${ctx.params.id} has been updated.`};
+
     next();
 });
 
