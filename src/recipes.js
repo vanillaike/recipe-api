@@ -3,14 +3,11 @@ const router = new Router({prefix: '/api/v1/recipes'});
 const mongo = require('koa-mongo');
 
 router.get('/count', async (ctx, next) => {
-    const recipes = await collection(ctx).find().toArray()
-    ctx.body = { count: recipes.length };
+    ctx.body = { count: await collection(ctx).countDocuments() };
 });
 
 router.get('/', async (ctx, next) => {
-    const recipes = await collection(ctx).find().toArray();
-    ctx.body = recipes;
-
+    ctx.body = await collection(ctx).find().toArray();
     next();
 });
 
